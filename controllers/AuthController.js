@@ -177,8 +177,6 @@ exports.refreshToken = (req, res, next) => {
             return next(err);
         }
 
-        console.log('Token:', token, 'Decoded:', decoded);
-
         if (decoded.expiresIn < Date.now()) {
             console.log('Error 2');
             // throw 401 status code & error message, return next(err);
