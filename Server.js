@@ -39,12 +39,12 @@ app.use((req, res, next) => {
 });
 
 // Serve static files like CSS, HTML & JS
-app.use('/', express.static('public'));
-app.use('/lists', express.static('public'));
-app.use('/lists/*', express.static('public'));
-app.use('/lists/*/settings', express.static('public'));
-app.use('/login', express.static('public'));
-app.use('/register', express.static('public'));
+// app.use('/', express.static('public'));
+// app.use('/lists', express.static('public'));
+// app.use('/lists/*', express.static('public'));
+// app.use('/lists/*/settings', express.static('public'));
+// app.use('/login', express.static('public'));
+// app.use('/register', express.static('public'));
 
 // Give our App access to our routes
 // Set URL for API group routes
