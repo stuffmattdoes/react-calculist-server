@@ -1,6 +1,9 @@
 {
   "name": "Calculist-API",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.9.1"
+  },
   "description": "",
   "main": "./Server.js",
   "scripts": {
@@ -9,6 +12,11 @@
   },
   "author": "Matthew Morrison",
   "license": "ISC",
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
   "dependencies": {
     "bcrypt": "^0.8.7",
     "body-parser": "^1.16.1",
