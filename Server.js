@@ -91,7 +91,7 @@ app.use(( err, req, res, next ) => {
 
     // logger.log( 'error' , { 'status': status , 'message': message , 'stack': stack , 'raw': raw } );
 
-    console.log('Error1:', err);
+    console.log('Error 1:', err);
     next( err );
 });
 
@@ -101,7 +101,7 @@ app.use(( err, req, res, next ) => {
         'message': err.message,
         'errors' : err.errors
     };
-    console.log('Error2:', responseError);
+    console.log('Error 2:', responseError);
     res.send(responseError);
     if ( err.stack ) { console.log( err.stack ); }
 });

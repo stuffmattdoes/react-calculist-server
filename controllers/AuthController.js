@@ -60,7 +60,6 @@ exports.register = (req, res, next) => {
 
         // Check for existing email
         if (existingUser) {
-            console.log('User exists already.');
             res.status(422)
             let err = {
                 errors: {
@@ -122,7 +121,6 @@ exports.login = (req, res, next) => {
                 // Authorization token here
                 // Respond with JWT if user was created
                 let userInfo = setUserInfo(user);
-                console.log(userInfo);
                 return res.status(200).json({
                     jwt: generateToken(userInfo, config.secret),
                     user: userInfo
@@ -159,12 +157,10 @@ exports.logout = (req, res, next) => {
 
 
 exports.refreshToken = (req, res, next) => {
-    console.log('Refresh token');
     let token = req.headers['authorization'];
 
     // Check for token
     if (!token) {
-        console.log('No token');
         res.status(401);
 
         let err = {
@@ -180,13 +176,13 @@ exports.refreshToken = (req, res, next) => {
         // }
 
         if (err) {
-            // console.log('Verify error:', err);
+            console.log('Verify error:', err);
             return next(err);
         }
 
         if (decoded.exp < Date.now()) {
             // throw 401 status code & error message, return next(err);
-            // console.log('Token expired');
+            console.log('Token expired');
             res.status(401);
 
             let err = {
@@ -199,11 +195,13 @@ exports.refreshToken = (req, res, next) => {
         //return user using the id from w/in JWTToken
         User.findById({'_id': decoded.user._id}, (err, user) => {
             if (err) {
-                // console.log('user error:', err);
                 return next(err);
             }
 
-            return res.status(200).send();
+            let userInfo = setUserInfo(user);
+            return res.status(200).json({
+                user: userInfo
+            });
         });
     });
 }
