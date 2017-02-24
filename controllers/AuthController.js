@@ -18,7 +18,7 @@ function setUserInfo(userData) {
 function generateToken (user, secret) {
     return jsonwebtoken.sign(
         {
-            exp: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
+            expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
             // exp: Date.now() + 2000, // 2 seconds
             // exp: 60,
             user: user
@@ -60,7 +60,6 @@ exports.register = (req, res, next) => {
 
         // Check for existing email
         if (existingUser) {
-            console.log('User exists already.');
             res.status(422)
             let err = {
                 errors: {
@@ -122,7 +121,6 @@ exports.login = (req, res, next) => {
                 // Authorization token here
                 // Respond with JWT if user was created
                 let userInfo = setUserInfo(user);
-                console.log(userInfo);
                 return res.status(200).json({
                     jwt: generateToken(userInfo, config.secret),
                     user: userInfo
@@ -159,12 +157,10 @@ exports.logout = (req, res, next) => {
 
 
 exports.refreshToken = (req, res, next) => {
-    console.log('Refresh token');
     let token = req.headers['authorization'];
 
     // Check for token
     if (!token) {
-        console.log('No token');
         res.status(401);
 
         let err = {
@@ -175,18 +171,17 @@ exports.refreshToken = (req, res, next) => {
 
     // Decode & verify token
     jsonwebtoken.verify(token, config.secret, (err, decoded) => {
-        // if (decoded.exp < Date.now()) {
-        //     console.log('true');
-        // }
 
         if (err) {
-            // console.log('Verify error:', err);
+            console.log('Error 1');
             return next(err);
         }
 
-        if (decoded.exp < Date.now()) {
+        console.log('Token:', token, 'Decoded:', decoded);
+
+        if (decoded.expiresIn < Date.now()) {
+            console.log('Error 2');
             // throw 401 status code & error message, return next(err);
-            // console.log('Token expired');
             res.status(401);
 
             let err = {
@@ -199,11 +194,14 @@ exports.refreshToken = (req, res, next) => {
         //return user using the id from w/in JWTToken
         User.findById({'_id': decoded.user._id}, (err, user) => {
             if (err) {
-                // console.log('user error:', err);
+                console.log('Error 3');
                 return next(err);
             }
 
-            return res.status(200).send();
+            let userInfo = setUserInfo(user);
+            return res.status(200).json({
+                user: userInfo
+            });
         });
     });
 }
@@ -213,13 +211,11 @@ exports.refreshToken = (req, res, next) => {
 // ==================================================
 
 exports.authUser = (req, res, next) => {
-    // console.log('auth user');
-
     let token = req.headers['authorization'];
     let decoded = jsonwebtoken.decode(token, config.secret);
 
     // 1. Validate the token
-    if (decoded.exp < Date.now()) {
+    if (decoded.expiresIn < Date.now()) {
         // throw 401 status code & error message, return next(err);
         res.status(401);
 
@@ -231,9 +227,7 @@ exports.authUser = (req, res, next) => {
     }
 
     // 2. Authenticate the user
-
     // 3. Authorize the user's role
-
     req._user = decoded.user;
 
     return next();

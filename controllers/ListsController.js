@@ -9,7 +9,7 @@ const   Item = require('../models/Item'),
 // GET route - receive all existing lists
 exports.getLists = (req, res, next) => {
 
-    List.find({owner: req._user.email}, (err, lists) => {
+    List.find({owner: req._user._id}, (err, lists) => {
         if (err) {
             console.log(err);
             res.status(500);

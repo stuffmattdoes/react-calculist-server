@@ -8,18 +8,12 @@ const AuthRoutes = new express.Router();
 AuthRoutes.use('/auth', AuthRoutes);
 
 // Registration route
-AuthRoutes.post('/register', (req, res, next) => {
-    AuthenticationController.register(req, res, next);
-});
+AuthRoutes.post('/register', AuthenticationController.register);
 
 // Login route
-AuthRoutes.post('/login', (req, res, next) => {
-    AuthenticationController.login(req, res, next);
-});
+AuthRoutes.post('/login', AuthenticationController.login);
 
 // Refresh route
-AuthRoutes.get('/refresh', (req, res, next) => {
-    AuthenticationController.refreshToken(req, res, next);
-});
+AuthRoutes.get('/refresh', AuthenticationController.refreshToken);
 
 module.exports = AuthRoutes;
