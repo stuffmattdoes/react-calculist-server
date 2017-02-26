@@ -34,6 +34,7 @@ function generateToken (user, secret) {
 
 // POST route - user registration
 exports.register = (req, res, next) => {
+    req.body.email.value = req.body.email.value.toLowerCase();
     let formValidationResults = FormValidationUtils.formValidate(req.body);
     let validCreds = true;
 

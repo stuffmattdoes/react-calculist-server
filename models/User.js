@@ -52,8 +52,9 @@ var UserSchema = new mongoose.Schema({
 // Authenticate login input vs. database document
 // 'Statics' lets you add methods directly to the model
 UserSchema.statics.authenticate = (email, password, callback) => {
+    let lowerCaseEmail = email.toLowerCase();
 
-    UserModel.findOne({ email: email })
+    UserModel.findOne({ email: lowerCaseEmail })
         .exec((err, user) => {
             if (err) {
                 return callback(err);
