@@ -23,3 +23,5 @@ Run the following commands in terminal/console in order to develop locally:
 
 ## Deployment ##
 You shouldn't be deploying my code! But if you must know, I host the this server-side portion of the Calculist app up on Heroku.
+
+Head over to [calculist.stuffmattdoes.com](https://calculist.stuffmattdoes.com) to register and shop on a budget!
