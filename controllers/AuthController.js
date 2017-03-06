@@ -35,10 +35,10 @@ function generateToken (user, secret) {
 // POST route - user registration
 exports.register = (req, res, next) => {
     req.body.email.value = req.body.email.value.toLowerCase();
-    let formValidationResults = FormValidationUtils.formValidate(req.body);
-    let validCreds = true;
+    var formValidationResults = FormValidationUtils.formValidate(req.body);
+    var validCreds = true;
 
-    for (let val in formValidationResults) {
+    for (var val in formValidationResults) {
         if (typeof formValidationResults[val] === 'string') {
             validCreds = false;
         }
@@ -47,7 +47,7 @@ exports.register = (req, res, next) => {
     if (!validCreds) {
         res.status(422);
 
-        let err = {
+        var err = {
             errors: formValidationResults
         };
         return next(err);
@@ -62,7 +62,7 @@ exports.register = (req, res, next) => {
         // Check for existing email
         if (existingUser) {
             res.status(422)
-            let err = {
+            var err = {
                 errors: {
                     'email': 'That email address is already in use.'
                 }
@@ -71,7 +71,7 @@ exports.register = (req, res, next) => {
         }
 
         // If credentials are looking good, create the account!
-        let user = new User({
+        var user = new User({
             email: req.body.email.value,
             password: req.body.password.value
         });
@@ -86,7 +86,7 @@ exports.register = (req, res, next) => {
             // mailchimp.subscribeToNewsletter(user.email);
 
             // Respond with JWT if user was created
-            let userInfo = setUserInfo(user);
+            var userInfo = setUserInfo(user);
 
             return res.status(201).json({
                 jwt: generateToken(userInfo, config.secret),
@@ -103,15 +103,15 @@ exports.register = (req, res, next) => {
 
 // POST route - user login
 exports.login = (req, res, next) => {
-    let email = req.body.email.value;
-    let password = req.body.password.value;
+    var email = req.body.email.value;
+    var password = req.body.password.value;
 
     if (email && password) {
         User.authenticate(email, password, (error, user) => {
             if (error || !user) {
                 res.status(401);
 
-                let err = {
+                var err = {
                     errors: {
                         'invalid': 'Wrong email or password.'
                     }
@@ -121,7 +121,7 @@ exports.login = (req, res, next) => {
             } else {
                 // Authorization token here
                 // Respond with JWT if user was created
-                let userInfo = setUserInfo(user);
+                var userInfo = setUserInfo(user);
                 return res.status(200).json({
                     jwt: generateToken(userInfo, config.secret),
                     user: userInfo
@@ -131,7 +131,7 @@ exports.login = (req, res, next) => {
     } else {
         res.status(401);
 
-        let err = {
+        var err = {
             errors: {
                 'invalid': 'Wrong email or password.'
             }
@@ -158,13 +158,13 @@ exports.logout = (req, res, next) => {
 
 
 exports.refreshToken = (req, res, next) => {
-    let token = req.headers['authorization'];
+    var token = req.headers['authorization'];
 
     // Check for token
     if (!token) {
         res.status(401);
 
-        let err = {
+        var err = {
             message: 'You must provide a token.'
         }
         return next(err);
@@ -183,7 +183,7 @@ exports.refreshToken = (req, res, next) => {
             // throw 401 status code & error message, return next(err);
             res.status(401);
 
-            let err = {
+            var err = {
                 message: 'Your session has expired. Please log in again.'
             }
 
@@ -197,7 +197,7 @@ exports.refreshToken = (req, res, next) => {
                 return next(err);
             }
 
-            let userInfo = setUserInfo(user);
+            var userInfo = setUserInfo(user);
             return res.status(200).json({
                 user: userInfo
             });
@@ -210,15 +210,15 @@ exports.refreshToken = (req, res, next) => {
 // ==================================================
 
 exports.authUser = (req, res, next) => {
-    let token = req.headers['authorization'];
-    let decoded = jsonwebtoken.decode(token, config.secret);
+    var token = req.headers['authorization'];
+    var decoded = jsonwebtoken.decode(token, config.secret);
 
     // 1. Validate the token
     if (decoded.expiresIn < Date.now()) {
         // throw 401 status code & error message, return next(err);
         res.status(401);
 
-        let err = {
+        var err = {
             message: 'Your session has expired. Please log in again.'
         }
 
@@ -230,10 +230,5 @@ exports.authUser = (req, res, next) => {
     req._user = decoded.user;
 
     return next();
-}
-
-// Role authorization check
-exports.authRole = (req, res, next) => {
-
 }
 
