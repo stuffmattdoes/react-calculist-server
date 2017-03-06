@@ -5,45 +5,6 @@ const   Item = require('../models/Item');
 // Items Route
 // ==================================================
 
-// GET route - receive all items
-exports.getItems = (req, res, next) => {
-    Item.find({}, (err, items) => {
-        if (err) {
-            console.log(err);
-            res.status(500);
-            let err = {
-                message: err.message
-            };
-            return next(err);
-        }
-        res.status(200).json({
-            items: items
-        });
-        return next();
-    });
-};
-
-// GET route - receive items for current list
-exports.getItemsForList = (req, res, next) => {
-    var id = req.params.listID;
-
-    Item.find({ listID: id}, (err, items) => {
-        if (err) {
-            console.log(err);
-            res.status(500);
-            let err = {
-                message: err.message
-            };
-            return next(err);
-        }
-
-        res.status(200).json({
-            items: items
-        });
-        return next();
-    });
-};
-
 // POST route - create items
 /*
 {
@@ -112,7 +73,6 @@ exports.updateItem = (req, res, next) => {
 };
 
 function getKeyValuePair(updates) {
-    var newKeyValuePair = updates;
     var newKeyPair = {};
 
     for (var key in updates) {

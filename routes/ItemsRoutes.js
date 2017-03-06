@@ -9,7 +9,7 @@ ItemRoutes.use('/items', ItemRoutes);
 
 // Get all items
 // apiRoutes.get('/items', ItemController.getItems);
-ItemRoutes.get('/', AuthenticationController.authUser, ItemController.getItems);
+// ItemRoutes.get('/', AuthenticationController.authUser, ItemController.getItems);
 
 // Get all items for this list
 // itemRoutes.get('/:listID', ItemController.getItemsForList);
