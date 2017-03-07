@@ -150,7 +150,7 @@ exports.logout = (req, res, next) => {
             if (err) {
                 return next(err);
             } else {
-                return res.redirect('/login');
+                return res.redirect('/login/');
             }
         });
     }
