@@ -9,7 +9,7 @@ ListRoutes.use('/lists', ListRoutes);
 
 // Get all lists
 // /lists
-ListRoutes.get('/', AuthenticationController.authUser, ListController.getListsAndItems);
+ListRoutes.get('/', AuthenticationController.authUser, ListController.getLists);
 
 // Create a new list
 // /lists/asdvm3t

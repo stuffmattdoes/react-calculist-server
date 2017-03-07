@@ -7,11 +7,8 @@ const   Item = require('../models/Item'),
 // ==================================================
 
 // GET route - receive all lists and their items
-exports.getListsAndItems = (req, res, next) => {
-    List.find({owner: req._user._id}, (err, lists) => {
-        console.log('----------------------------------------------');
-        console.log('Lists:', lists);
-
+exports.getListsAndItems = function(req, res, next) {
+    List.find({owner: req._user._id}, function(err, lists) {
         if (err) {
             console.log(err);
             res.status(500);
@@ -29,13 +26,12 @@ exports.getListsAndItems = (req, res, next) => {
             });
         }
 
-    }).then((lists) => {
+    }).then(function(lists) {
+        console.log(lists);
         var allItems = [];
         var acc = 0;
-        lists.forEach((list, index) => {
-            Item.find({ listID: list.listID}, (err, listItems) => {
-                console.log(index, lists.length);
-                console.log('List Items Found:', listItems);
+        lists.forEach(function(list, index) {
+            Item.find({ listID: list.listID}, function(err, listItems) {
                 if (err) {
                     console.log(err);
                     res.status(500);
@@ -48,7 +44,6 @@ exports.getListsAndItems = (req, res, next) => {
                 acc ++;
                 // If we've iterated through every list, send our response
                 if(acc === lists.length) {
-                    console.log('All List Items Final:', allItems);
                     res.status(200).json({
                         lists: lists,
                         items: allItems
@@ -62,6 +57,44 @@ exports.getListsAndItems = (req, res, next) => {
 
 };
 
+exports.getLists = function(req, res, next) {
+    List.aggregate([
+        {
+            $match: {
+                owner: req._user._id
+            }
+        },
+        {
+            $lookup: {
+                from: 'items',
+                localField: 'listID',
+                foreignField: 'listID',
+                as: 'items'
+            }
+        }
+    ]).then(function(data) {
+        var lists = data;
+        var items = [];
+
+        lists.forEach(function(value, index) {
+            items = items.concat(value.items);
+            delete lists[index].items;
+        });
+
+        res.status(200).json({
+            lists: lists,
+            items: items
+        });
+    }).catch(function(err) {
+        console.log('Error:', err);
+        res.status(500);
+        let error = {
+            message: err.message
+        };
+        return next(error);
+    });
+}
+
 // POST route - create lists
 /*
 {
@@ -69,9 +102,9 @@ exports.getListsAndItems = (req, res, next) => {
     "title": "List Title"
 }
 */
-exports.createList = (req, res, next) => {
+exports.createList =  function(req, res, next) {
     var list = req.body;
-    List.create(list, (err, list) => {
+    List.create(list, function(err, list) {
         if (err) {
             console.log(err);
             res.status(500);
@@ -98,12 +131,12 @@ exports.createList = (req, res, next) => {
     }
 }
 */
-exports.updateList = (req, res, next) => {
+exports.updateList = function(req, res, next) {
     var id = req.params.listID;
     var listUpdates = req.body.updates;
     
     // Query our list for our ID, then update it
-    List.update({listID: id}, listUpdates, {new: true}, (err, list) => {
+    List.update({listID: id}, listUpdates, {new: true}, function(err, list) {
         if (err) {
             console.log(err);
             res.status(500);
@@ -123,11 +156,11 @@ exports.updateList = (req, res, next) => {
 };
 
 // DELETE route - delete existing lists
-exports.deleteList = (req, res, next) => {
+exports.deleteList = function(req, res, next) {
     var id = req.params.listID;
 
     // Delete the list
-    List.remove({listID: id}, (err, list) => {
+    List.remove({listID: id}, function(err, list) {
         if (err) {
             console.log(err);
             res.status(500);
@@ -140,7 +173,7 @@ exports.deleteList = (req, res, next) => {
     });
 
     // Delete the list's items
-    Item.remove({listID: id}, (err, item) => {
+    Item.remove({listID: id}, function(err, item) {
         if (err) {
             console.log(err);
             res.status(500);

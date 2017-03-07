@@ -54,7 +54,7 @@ exports.register = (req, res, next) => {
     }
 
     // Now add our user
-    User.findOne({ email: req.body.email.value }, (err, existingUser) => {
+    User.findOne({ email: req.body.email.value }, function(err, existingUser) {
         if (err) {
             return next(err);
         }
@@ -77,7 +77,7 @@ exports.register = (req, res, next) => {
         });
 
         // Create our user
-        user.save((err, user) => {
+        user.save(function(err, user) {
             if (err) {
                 return next(err);
             }
@@ -107,7 +107,7 @@ exports.login = (req, res, next) => {
     var password = req.body.password.value;
 
     if (email && password) {
-        User.authenticate(email, password, (error, user) => {
+        User.authenticate(email, password, function(error, user) {
             if (error || !user) {
                 res.status(401);
 
@@ -146,7 +146,7 @@ exports.logout = (req, res, next) => {
     if (req.session) {
 
         // Delete session object
-        req.session.destroy(err => {
+        req.session.destroy(function(err) {
             if (err) {
                 return next(err);
             } else {
@@ -171,7 +171,7 @@ exports.refreshToken = (req, res, next) => {
     }
 
     // Decode & verify token
-    jsonwebtoken.verify(token, config.secret, (err, decoded) => {
+    jsonwebtoken.verify(token, config.secret, function(err, decoded) {
 
         if (err) {
             console.log('Error 1');
@@ -191,7 +191,7 @@ exports.refreshToken = (req, res, next) => {
         }
 
         //return user using the id from w/in JWTToken
-        User.findById({'_id': decoded.user._id}, (err, user) => {
+        User.findById({'_id': decoded.user._id}, function(err, user) {
             if (err) {
                 console.log('Error 3');
                 return next(err);
