@@ -8,9 +8,9 @@ const   Item = require('../models/Item'),
 
 // GET route - receive all lists and their items
 exports.getListsAndItems = (req, res, next) => {
-
     List.find({owner: req._user._id}, (err, lists) => {
-        var allItems = [];
+        console.log('----------------------------------------------');
+        console.log('Lists:', lists);
 
         if (err) {
             console.log(err);
@@ -21,8 +21,21 @@ exports.getListsAndItems = (req, res, next) => {
             return next(err);
         }
 
+        if (!lists.length) {
+            console.log('No lists');
+            res.status(200).json({
+                lists: lists,
+                items: allItems
+            });
+        }
+
+    }).then((lists) => {
+        var allItems = [];
+        var acc = 0;
         lists.forEach((list, index) => {
             Item.find({ listID: list.listID}, (err, listItems) => {
+                console.log(index, lists.length);
+                console.log('List Items Found:', listItems);
                 if (err) {
                     console.log(err);
                     res.status(500);
@@ -31,11 +44,11 @@ exports.getListsAndItems = (req, res, next) => {
                     };
                     return next(err);
                 }
-
                 allItems = allItems.concat(listItems);
-
+                acc ++;
                 // If we've iterated through every list, send our response
-                if(index === lists.length - 1) {
+                if(acc === lists.length) {
+                    console.log('All List Items Final:', allItems);
                     res.status(200).json({
                         lists: lists,
                         items: allItems
@@ -45,7 +58,6 @@ exports.getListsAndItems = (req, res, next) => {
             }); // end Item.find query
 
         }); // end lists.forEach iteration
-
     }); // End List.find query
 
 };
@@ -125,23 +137,23 @@ exports.deleteList = (req, res, next) => {
             return next(err);
         }
 
-        // Delete the list's items
-        Item.remove({listID: id}, (err, item) => {
-            if (err) {
-                console.log(err);
-                res.status(500);
-                let err = {
-                    message: err.message
-                };
-                return next(err);
-            }
+    });
 
-            res.status(200).json({
-                successMessage: "List deleted"
-            });
+    // Delete the list's items
+    Item.remove({listID: id}, (err, item) => {
+        if (err) {
+            console.log(err);
+            res.status(500);
+            let err = {
+                message: err.message
+            };
+            return next(err);
+        }
 
-        });
+    });
 
+    res.status(200).json({
+        successMessage: "List deleted"
     });
 
     return next();
