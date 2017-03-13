@@ -7,7 +7,6 @@ const User = require('../models/User');
 const FormValidationUtils = require('../utils/FormValidationUtils');
 
 function setUserInfo(userData) {
-    console.log(userData);
     return {
         _id: userData._id,
         email: userData.email,
