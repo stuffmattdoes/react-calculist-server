@@ -1,5 +1,7 @@
 # Calculist (server-side) #
-A list + calculator app made for my wife &amp; I to help grocery shop. I am currently responsible for all design & development efforts.
+Your in-store shopping cart total. Know what you're spending before you spend it.
+
+I am currently responsible for all design & development efforts.
 
 ![alt tag](Mockup.png)
 
