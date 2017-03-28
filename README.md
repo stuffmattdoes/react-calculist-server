@@ -9,8 +9,9 @@ I am currently responsible for all design & development efforts.
 This repository contains the server-side code, and is meant to be used in conjunction with the client-side app. You can download the client-side code [here](https://github.com/stuffmattdoes/react-calculist-client).
 
 Your development environment needs the following software installed:
-* [Node.js & NPM](https://nodejs.org/en/) - serves as our local API server
-* [MongoDB](https://www.mongodb.com/) - handles our local database
+
+* [Node.js & NPM](https://nodejs.org/en/) - API server
+* [MongoDB](https://www.mongodb.com/) - Database
 
 ## Setup ##
 Run the following commands in terminal/console in order to get setup locally:
