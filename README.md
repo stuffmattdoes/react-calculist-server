@@ -10,8 +10,12 @@ This repository contains the server-side code, and is meant to be used in conjun
 
 Your development environment needs the following software installed:
 
-* [Node.js & NPM](https://nodejs.org/en/) - API server
-* [MongoDB](https://www.mongodb.com/) - Database
+* [Node.js & NPM](https://nodejs.org/en/)
+* [MongoDB](https://www.mongodb.com/)
+
+## The Tech Stack ##
+* [Express](https://expressjs.com/) - *(Javascript)* a framework built on top of Node that handles API calls and responses.
+* [Mongoose](http://mongoosejs.com/) - *(Javascript)* 
 
 ## Setup ##
 Run the following commands in terminal/console in order to get setup locally:
