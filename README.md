@@ -6,8 +6,6 @@ I am currently responsible for all design & development efforts.
 ![alt tag](Mockup.png)
 
 ## Requirements ##
-This repository contains the server-side code, and is meant to be used in conjunction with the client-side app. You can download the client-side code [here](https://github.com/stuffmattdoes/react-calculist-client).
-
 Your development environment needs the following software installed:
 
 * [Node.js & NPM](https://nodejs.org/en/)
