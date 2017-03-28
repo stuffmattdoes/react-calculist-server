@@ -1,7 +1,7 @@
 # Calculist (server-side) #
 Your in-store shopping cart total. Know what you're spending before you spend it.
 
-I am currently responsible for all design & development efforts.
+[Matthew Morrison](m.james.morrison00@gmail.com) - literally everything
 
 ![alt tag](Mockup.png)
 
