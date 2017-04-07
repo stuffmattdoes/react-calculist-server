@@ -33,4 +33,8 @@ Head over to [calculist.stuffmattdoes.com](https://calculist.stuffmattdoes.com) 
 This app is in active development. To see a list of planned features, check out my [Calculist Trello board](https://trello.com/b/ZQUkXrIX/calculist).
 
 ## Personnel ##
+<<<<<<< HEAD
 [Matthew Morrison](m.james.morrison00@gmail.com) - literally everything
+=======
+[Matthew Morrison](m.james.morrison00@gmail.com) - literally everything
+>>>>>>> 1e399743ce2c451e8612bbf4d9d9ed73e6d1ab8b
