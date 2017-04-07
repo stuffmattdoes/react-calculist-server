@@ -1,14 +1,17 @@
 # Calculist (server-side) #
-A list + calculator app made for my wife &amp; I to help grocery shop. I am currently responsible for all design & development efforts.
+Your in-store shopping cart total. Know what you're spending before you spend it.
 
 ![alt tag](Mockup.png)
 
 ## Requirements ##
-This repository contains the server-side code, and is meant to be used in conjunction with the client-side app. You can download the client-side code [here](https://github.com/stuffmattdoes/react-calculist-client).
-
 Your development environment needs the following software installed:
-* [Node.js & NPM](https://nodejs.org/en/) - serves as our local API server
-* [MongoDB](https://www.mongodb.com/) - handles our local database
+
+* [Node.js & NPM](https://nodejs.org/en/)
+* [MongoDB](https://www.mongodb.com/)
+
+## The Tech Stack ##
+* [Express](https://expressjs.com/) - *(Javascript)* a framework built on top of Node that handles API calls and responses.
+* [Mongoose](http://mongoosejs.com/) - *(Javascript)* 
 
 ## Setup ##
 Run the following commands in terminal/console in order to get setup locally:
@@ -28,3 +31,6 @@ Head over to [calculist.stuffmattdoes.com](https://calculist.stuffmattdoes.com) 
 
 ## Roadmap ##
 This app is in active development. To see a list of planned features, check out my [Calculist Trello board](https://trello.com/b/ZQUkXrIX/calculist).
+
+## Personnel ##
+[Matthew Morrison](m.james.morrison00@gmail.com) - literally everything
